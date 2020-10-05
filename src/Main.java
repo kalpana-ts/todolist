@@ -1,8 +1,5 @@
-
-
-/** Main Class with main method of the project.
- * @author KalpanaTS
- *
+/** Main Class with main method of the project
+ * @author Kalpana TS
  */
 
 import java.text.ParseException;
@@ -12,44 +9,53 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
+
+
+
+
     public static void main(String[] args) throws ParseException {
-        Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> taskList = new ArrayList<Task>(  );
+        try {
+          Scanner scanner = new Scanner(System.in);
 
-        Task task = new Task();
-        int choice = 0;
+          Display display = new Display( );
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Task task = new Task( );
+            TaskList tL = new TaskList();
 
-        String title,description,status,project;
-        Date dueDate;
+            int choice = 0;
+            display.welcomeMsg();
 
-        while(choice!=5 || choice!=6 ) {
-            System.out.println(" MAIN MENU");
-            System.out.println(" __________");
-            System.out.println(" \n Select an Option:");
-            System.out.println(" 1. List tasks");
-            System.out.println(" 2. Add a new task");
-            System.out.println(" 3. Edit task");
-            System.out.println(" 4. Remove a task");
-            System.out.println(" 5. Save and Quit");
-            System.out.println(" 6. Quit without saving");
-            System.out.println(" Your Choice[1-6]: ");
+            while (choice!=6) {
+                    display.mainMenuDisplay( );
+                    choice = scanner.nextInt();
 
-            choice = scanner.nextInt( );
-            if(choice == 2){
-                System.out.println("Please Enter Task Details " );
-                System.out.println("Enter Title of the task:" );
-                title = scanner.next();
-                //task.setTaskTitle(scanner.next());
-                System.out.println("Enter description of the task: " );
-                description = scanner.next();
-                System.out.println("Enter due date of the project:(dd/MM/yyyy)" );
-                String dueDatestr = scanner.nextLine();
-                dueDate = sdf.parse(dueDatestr);
+                    switch(choice){
+                        case 1:
+                            System.out.println("yet to Write a displayList Menu and call it");
+                            break;
+                        case 2:
+                            display.addMenuDisplay();
+                            break;
+                        case 3:
+                            System.out.println("-yet to Write edit method" );
+                            break;
+                        case 4:
+                            System.out.println("yet to write Remove method" );
+                            break;
+                        case 5:
+                            tL.writeTaskObj();
+                            break;
+                        case 6:
+                            break;
 
+                        default:
+                            System.out.println("End of the program" );
+
+
+                    }
             }
+        }catch(Exception e){
+            System.out.println("Parse Exception");
         }
-
     }
 }

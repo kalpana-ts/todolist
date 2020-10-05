@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Task {
@@ -6,6 +7,7 @@ public class Task {
     private Date dueDate;
     private String status; //try boolean
     private String project;
+    TaskList tl = new TaskList();
 
     public Task(){
 
@@ -17,6 +19,7 @@ public class Task {
                 this.dueDate = dueDate;
                 this.status = status;
                 this.project = project;
+                tl.addTask(this);
     }
 
     public void setTaskTitle(String title){
