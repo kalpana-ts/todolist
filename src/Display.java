@@ -1,46 +1,59 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Scanner;
+
+import java.util.ArrayList;
+
+/* To be implemented
+  Welcome message
+  Bye message
+  Edit task menu
+  toString overriding
+  Incorrect option message
+  Try to implement colors || add in milestones
+
+
+ */
 
 public class Display {
-    Scanner scanner = new Scanner(System.in);
-    Task task;
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    TaskList taskList = new TaskList();
+
+
+
     public void welcomeMsg(){
         System.out.println("Welcome to ToDo List App" );
         System.out.println("------------------------" );
     }
+  //To display main menu
 
     public void mainMenuDisplay(){
         System.out.println(" MAIN MENU");
         System.out.println(" __________");
         System.out.println(" \n Select an Option:");
-        System.out.println(" 1. List tasks");
+        System.out.println(" 1. View tasks List");
         System.out.println(" 2. Add a new task");
         System.out.println(" 3. Edit task");
         System.out.println(" 4. Remove a task");
         System.out.println(" 5. Save and Quit");
-        System.out.println(" 6. Quit without saving");
-        System.out.println(" Your Choice[1-6]: ");
+
+        System.out.println(" Your Choice[1-5]: ");
 
     }
+    //To display the Menu for View tasks
+    public void listAllMenuDisplay(){
+        System.out.println("View all Tasks");
+        System.out.println("______________");
+        System.out.println("Select an option:");
+        System.out.println("1. View Tasks by Date");
+        System.out.println("2. View Tasks by Project");
+        System.out.println(" Your Choice[1-2]: ");
+    }
 
-    public void addMenuDisplay() throws ParseException {
-            System.out.println("Please Enter Task Details");
-            System.out.println("-------------------------" );
-            System.out.println("Enter Title of the task:");
-            String title = scanner.nextLine( );
-            System.out.println("Enter description of the task: ");
-            String description = scanner.nextLine( );
-            System.out.println("Enter due date of the project:(dd/MM/yyyy)");
-            Date dueDate = sdf.parse(scanner.nextLine());
-            System.out.println("Enter the project name(Home/SDA/Kids/Others):");
-            String project = scanner.next();
-            task = new Task(title,description,dueDate,"No",project);
+
+
+        public void diplayAllTasks(){
+        ArrayList<Task> taskArrayList=taskList.listAllTask( );
+
+        System.out.println(taskArrayList);
+   //   System.out.println(taskArrayList.get(0).toString());
 
         }
 }

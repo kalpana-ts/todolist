@@ -1,40 +1,39 @@
 /** Main Class with main method of the project
  * @author Kalpana TS
+ * @version 1.0
+ * @Date 07/10/2020
  */
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
 
-
-
-
     public static void main(String[] args) throws ParseException {
+        Scanner scanner = new Scanner(System.in);
+
+        Display display = new Display( );
+        int choice = 0;
         try {
-          Scanner scanner = new Scanner(System.in);
 
-          Display display = new Display( );
+        //    Task task = new Task( );
+            TaskList taskList = new TaskList();
 
-            Task task = new Task( );
-            TaskList tL = new TaskList();
 
-            int choice = 0;
             display.welcomeMsg();
 
-            while (choice!=6) {
+            while (choice != 5) {
                     display.mainMenuDisplay( );
                     choice = scanner.nextInt();
 
                     switch(choice){
                         case 1:
-                            System.out.println("yet to Write a displayList Menu and call it");
+                            display.listAllMenuDisplay();
+                            display.diplayAllTasks();
                             break;
                         case 2:
-                            display.addMenuDisplay();
+                            taskList.readNewTasks();
+                            taskList.writeTaskObj();
                             break;
                         case 3:
                             System.out.println("-yet to Write edit method" );
@@ -43,10 +42,9 @@ public class Main {
                             System.out.println("yet to write Remove method" );
                             break;
                         case 5:
-                            tL.writeTaskObj();
+                            taskList.writeTaskObj();
                             break;
-                        case 6:
-                            break;
+
 
                         default:
                             System.out.println("End of the program" );
