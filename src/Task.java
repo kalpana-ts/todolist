@@ -8,6 +8,13 @@ import java.util.Date;
  * @Date 07/10/2020
  */
 
+
+/*To be done
+    Check empty and null values in set methods
+    find what to do on else part
+
+ */
+
 public class Task implements Serializable {
     private String title;
     private String description;
@@ -30,8 +37,10 @@ public class Task implements Serializable {
     }
 
     public void setTitle(String title){
-
-        this.title = title;
+        if( title==null || title.trim().equals(""))
+            this.title = title;
+        //else
+        //    System.out.println("Please Enter title" );
     }
 
     public String getTitle(){
@@ -39,11 +48,38 @@ public class Task implements Serializable {
     }
 
     public void setDescription(String description){
+
         this.description = description;
     }
 
     public String getDescription(){
+
         return this.description;
+    }
+
+    public void setDueDate(Date dueDate){
+
+        this.dueDate = dueDate;
+    }
+
+    public Date getDueDate(){
+        return this.dueDate;
+    }
+
+    public void setProject(String project){
+        this.project = project;
+    }
+
+    public String getProject(){
+        return this.project;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
+    }
+
+    public String getStatus(){
+        return this.status;
     }
 
 }
