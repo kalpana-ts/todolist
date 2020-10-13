@@ -1,5 +1,7 @@
 import java.io.Serializable;
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 /** This Class is a model for task object.
  * It contains all the fields and methods to update a task.
@@ -18,7 +20,7 @@ import java.util.Date;
 public class Task implements Serializable {
     private String title;
     private String description;
-    private Date dueDate;
+    private LocalDate dueDate;
     private String status; //try boolean
     private String project;
   //  TaskList tl;
@@ -27,7 +29,7 @@ public class Task implements Serializable {
 
     }*/
 
-    public Task(String title, String description,Date dueDate,String status,String project){
+    public Task(String title, String description,LocalDate dueDate,String status,String project){
                 this.title = title;
                 this.description = description;
                 this.dueDate = dueDate;
@@ -57,12 +59,17 @@ public class Task implements Serializable {
         return this.description;
     }
 
-    public void setDueDate(Date dueDate){
+    public void setDueDate(LocalDate dueDate) throws DateTimeException {
+        //Throw DateTimeException if the date is past date
+        if(dueDate.compareTo(LocalDate.now())>0){
+            throw new DateTimeException("The entered date is past already");
+        }
 
-        this.dueDate = dueDate;
+        DateTimeFormatter formattedDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.dueDate = LocalDate.parse(dueDate.format(formattedDate));
     }
 
-    public Date getDueDate(){
+    public LocalDate getDueDate(){
         return this.dueDate;
     }
 
