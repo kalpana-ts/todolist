@@ -29,9 +29,9 @@ public class TaskList {
         this.taskList.add(t);
     }
 
-    public void writeTaskObj(){
+    public boolean writeTaskObj(String filename){
         try{
-            FileOutputStream file = new FileOutputStream("tasks.txt");
+            FileOutputStream file = new FileOutputStream(filename);
             ObjectOutputStream output = new ObjectOutputStream(file);
 
             output.writeObject(taskList);
@@ -41,22 +41,24 @@ public class TaskList {
             file.close();
 
             System.out.println("Tasks saved to the file" );
+            return true;
 
 
         }catch(IOException e){
             System.out.println("File doesn't found" + e );
+            return false;
         }
     }
 
     //showing without sorting feature, reading from file.. not done yet
-    public ArrayList<Task> listAllTask(){
-        ArrayList<Task> list = new ArrayList<>();
+    public ArrayList<Task> readTasksFromFile(){
+    //    ArrayList<Task> list = new ArrayList<>();
         try{
-            FileInputStream file = new FileInputStream( "tasks.txt");
+            FileInputStream file = new FileInputStream( "tasks.obj");
             ObjectInputStream stream = new ObjectInputStream(file);
 
             // read thing from the stream
-            list = (ArrayList<Task>) stream.readObject();
+            taskList = (ArrayList<Task>) stream.readObject();
 
             stream.close();
             file.close();
@@ -70,8 +72,15 @@ public class TaskList {
             System.out.println("problems inside the file " + e);
         }
 
-        return list;
+        return taskList;
     }
+
+    public void diplayAllTasks(){
+        for(Task t:taskList){
+                 System.out.println(t.toString() );
+                }
+    }
+
     //Read new tasks from user
     public void readNewTasks() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -85,7 +94,7 @@ public class TaskList {
         Date dueDate = sdf.parse(scanner.nextLine());
         System.out.println("Enter the project name(Home/SDA/Kids/Others):");
         String project = scanner.next();
-       this.taskList.add(new Task(title,description,dueDate,"No",project));
+        this.taskList.add(new Task(title,description,dueDate,"No",project));
 
     }
     //Tasks List Display

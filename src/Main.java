@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 
 public class Main {
-
+    public static String filename = "tasks.obj";
     public static void main(String[] args) throws ParseException {
         Scanner scanner = new Scanner(System.in);
 
@@ -18,22 +18,23 @@ public class Main {
 
         //    Task task = new Task( );
             TaskList taskList = new TaskList();
-
+            taskList.readTasksFromFile();
 
             display.welcomeMsg();
 
             while (choice != 5) {
                     display.mainMenuDisplay( );
+
                     choice = scanner.nextInt();
 
                     switch(choice){
                         case 1:
                             display.listAllMenuDisplay();
-                            display.diplayAllTasks();
+                            taskList.diplayAllTasks();
                             break;
                         case 2:
                             taskList.readNewTasks();
-                            taskList.writeTaskObj();
+
                             break;
                         case 3:
                             System.out.println("-yet to Write edit method" );
@@ -42,7 +43,7 @@ public class Main {
                             System.out.println("yet to write Remove method" );
                             break;
                         case 5:
-                            taskList.writeTaskObj();
+                            taskList.writeTaskObj(filename);
                             break;
 
 

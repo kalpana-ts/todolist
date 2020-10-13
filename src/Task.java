@@ -82,4 +82,9 @@ public class Task implements Serializable {
         return this.status;
     }
 
+    @Override
+    public String toString(){
+        return title + " " + description + " " + dueDate + " " + status + " " + project;
+    }
+
 }

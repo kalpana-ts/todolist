@@ -49,11 +49,14 @@ public class Display {
 
 
 
-        public void diplayAllTasks(){
-        ArrayList<Task> taskArrayList=taskList.listAllTask( );
+   //    public void diplayAllTasks(){
+   //     ArrayList<Task> taskArrayList=taskList.listAllTask();
 
-        System.out.println(taskArrayList);
+  //      System.out.println(taskArrayList);
+   //     for(Task t:taskArrayList){
+   //         System.out.println(t.toString() );
+   //     }
    //   System.out.println(taskArrayList.get(0).toString());
 
-        }
+    //    }
 }
