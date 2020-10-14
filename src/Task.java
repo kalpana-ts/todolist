@@ -1,6 +1,8 @@
 import java.io.Serializable;
+import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
+
 /** This Class is a model for task object.
  * It contains all the fields and methods to update a task.
  * @author Kalpana TS
@@ -9,27 +11,21 @@ import java.util.Date;
  */
 
 
-/*To be done
+/* To be done
     Check empty and null values in set methods
     find what to do on else part
 
  */
 
 public class Task implements Serializable {
+
     private String title;
-    private String description;
-    private Date dueDate;
+    private LocalDate dueDate;
     private String status; //try boolean
     private String project;
-  //  TaskList tl;
 
-  /*  public Task(){
-
-    }*/
-
-    public Task(String title, String description,Date dueDate,String status,String project){
+    public Task(String title, LocalDate dueDate,String status,String project){
                 this.title = title;
-                this.description = description;
                 this.dueDate = dueDate;
                 this.status = status;
                 this.project = project;
@@ -39,35 +35,32 @@ public class Task implements Serializable {
     public void setTitle(String title){
         if( title==null || title.trim().equals(""))
             this.title = title;
-        //else
-        //    System.out.println("Please Enter title" );
+        this.title = title.trim();
     }
 
     public String getTitle(){
         return this.title;
     }
 
-    public void setDescription(String description){
 
-        this.description = description;
+
+    public void setDueDate(LocalDate dueDate) throws DateTimeException {
+        //Throw DateTimeException if the date is past date
+        if(dueDate.compareTo(LocalDate.now())>0){
+            throw new DateTimeException("The entered date is past already");
+        }
+        //Save dueDate in the yyyy-MM-dd format
+        DateTimeFormatter formattedDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.dueDate = LocalDate.parse(dueDate.format(formattedDate));
     }
 
-    public String getDescription(){
-
-        return this.description;
-    }
-
-    public void setDueDate(Date dueDate){
-
-        this.dueDate = dueDate;
-    }
-
-    public Date getDueDate(){
+    public LocalDate getDueDate(){
         return this.dueDate;
     }
 
     public void setProject(String project){
-        this.project = project;
+
+        this.project = project.trim();
     }
 
     public String getProject(){
@@ -75,7 +68,7 @@ public class Task implements Serializable {
     }
 
     public void setStatus(String status){
-        this.status = status;
+        this.status = status.trim();
     }
 
     public String getStatus(){
@@ -84,7 +77,7 @@ public class Task implements Serializable {
 
     @Override
     public String toString(){
-        return title + " " + description + " " + dueDate + " " + status + " " + project;
+        return title + " "  + dueDate + " " + status + " " + project;
     }
 
 }

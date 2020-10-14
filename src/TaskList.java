@@ -3,21 +3,22 @@ import java.sql.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Scanner;
-/* To be done
-Indexing
-Finished and pending count
-
-
-
+/** This class contains the actual Task List as an arraylist
+ *
+ * @author Kalpana TS
+ *
+ * To be done
+    Indexing
+    Finished and pending count
  */
 
 
 
 // ArrayList of Task object
 public class TaskList {
-    Scanner scanner = new Scanner(System.in);
+
     private ArrayList<Task> taskList;
 
 
@@ -82,20 +83,24 @@ public class TaskList {
     }
 
     //Read new tasks from user
-    public void readNewTasks() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        System.out.println("Please Enter Task Details");
-        System.out.println("-------------------------" );
-        System.out.println("Enter Title of the task:");
-        String title = scanner.nextLine( );
-        System.out.println("Enter description of the task: ");
-        String description = scanner.nextLine( );
-        System.out.println("Enter due date of the project:(dd/MM/yyyy)");
-        Date dueDate = sdf.parse(scanner.nextLine());
-        System.out.println("Enter the project name(Home/SDA/Kids/Others):");
-        String project = scanner.next();
-        this.taskList.add(new Task(title,description,dueDate,"No",project));
+    public void readNewTasks()  {
+        try {
+            Scanner scanner = new Scanner(System.in);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            System.out.println("Please Enter Task Details");
+            System.out.println("-------------------------");
+            System.out.println("Enter Title of the task:");
+            String title = scanner.nextLine( );
 
+            System.out.println("Enter due date of the project:(yyyy-MM-dd)");
+
+            LocalDate dueDate = LocalDate.parse(scanner.nextLine( ));
+            System.out.println("Enter the project name(Home/SDA/Kids/Others):");
+            String project = scanner.next( );
+            this.taskList.add(new Task(title,  dueDate, "No", project));
+        }catch(Exception e){
+            System.out.println("Task not added! Please enter the correct date format." );
+        }
     }
     //Tasks List Display
     public void displayTasks(){
