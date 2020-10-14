@@ -46,6 +46,11 @@ public class Display {
         System.out.println("2. View Tasks by Project");
         System.out.println(" Your Choice[1-2]: ");
     }
+    public void showMessage(String message) {
+
+        System.out.println(">>> " + message);
+
+    }
 
 
 

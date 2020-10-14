@@ -91,14 +91,13 @@ public class TaskList {
             System.out.println("-------------------------");
             System.out.println("Enter Title of the task:");
             String title = scanner.nextLine( );
-            System.out.println("Enter description of the task: ");
-            String description = scanner.nextLine( );
+
             System.out.println("Enter due date of the project:(yyyy-MM-dd)");
 
             LocalDate dueDate = LocalDate.parse(scanner.nextLine( ));
             System.out.println("Enter the project name(Home/SDA/Kids/Others):");
             String project = scanner.next( );
-            this.taskList.add(new Task(title, description, dueDate, "No", project));
+            this.taskList.add(new Task(title,  dueDate, "No", project));
         }catch(Exception e){
             System.out.println("Task not added! Please enter the correct date format." );
         }
