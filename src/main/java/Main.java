@@ -1,40 +1,45 @@
+import java.text.ParseException;
+import java.util.Scanner;
+
 /** Main Class with main method of the project
  * @author Kalpana TS
  * @version 1.0
  * @Date 07/10/2020
  */
 
-import java.text.ParseException;
-import java.util.Scanner;
 
 public class Main {
+    // A string to hold the data file name which contains all tasks and their details
     public static String filename = "tasks.obj";
-    public static void main(String[] args) throws ParseException {
-        Scanner scanner = new Scanner(System.in);
 
-        Display display = new Display( );
+    /**
+     * main method to run the command line based To Do List application
+     * @param args array of String holding command line parameters
+     */
+    public static void main(String[] args) {
+
         int choice = 0;
         try {
 
         //    Task task = new Task( );
+            Scanner scanner = new Scanner(System.in);
             TaskList taskList = new TaskList();
             taskList.readTasksFromFile();
 
-            display.welcomeMsg();
+            Display.welcomeMsg();
 
             while (choice != 5) {
-                    display.mainMenuDisplay( );
+                    Display.mainMenuDisplay( );
 
                     choice = scanner.nextInt();
 
                     switch(choice){
                         case 1:
-                            display.listAllMenuDisplay();
-                            taskList.diplayAllTasks();
+                            Display.listAllMenuDisplay();
+                            taskList.displayAllTasks(scanner.nextInt());
                             break;
                         case 2:
                             taskList.readNewTasks();
-
                             break;
                         case 3:
                             System.out.println("-yet to Write edit method" );

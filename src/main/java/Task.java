@@ -21,20 +21,19 @@ public class Task implements Serializable {
 
     private String title;
     private LocalDate dueDate;
-    private String status; //try boolean
+    private boolean status;
     private String project;
 
-    public Task(String title, String project, LocalDate dueDate, String status){
-        this.title = title;
-        this.dueDate = dueDate;
-        this.project = project;
-        this.status = status;
-
+    public Task(String title, String project, LocalDate dueDate) {
+        this.setTitle(title);
+        this.setDueDate(dueDate);
+        this.setProject(project);
+        this.status = false;
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) throws NullPointerException {
         if( title==null || title.trim().equals(""))
-            this.title = title;
+            throw new NullPointerException( "Title cannot be empty" );
         this.title = title.trim();
     }
 
@@ -47,7 +46,7 @@ public class Task implements Serializable {
     public void setDueDate(LocalDate dueDate) throws DateTimeException {
         //Throw DateTimeException if the date is past date
         if(dueDate.compareTo(LocalDate.now())>0)
-            throw new DateTimeException("The entered date is past already");
+            throw new DateTimeException("The entered date is past already,not allowed!!");
 
         //Save dueDate in the yyyy-MM-dd format
         DateTimeFormatter formattedDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -59,7 +58,6 @@ public class Task implements Serializable {
     }
 
     public void setProject(String project){
-
         this.project = project.trim();
     }
 
@@ -67,17 +65,17 @@ public class Task implements Serializable {
         return this.project;
     }
 
-    public void setStatus(String status){
-        this.status = status.trim();
+    public void setStatus(boolean status){
+        this.status = status;
     }
 
-    public String getStatus(){
+    public boolean getStatus(){
         return this.status;
     }
 
     @Override
     public String toString(){
-        return title + " "  + dueDate + " " + status + " " + project;
+        return project + "      "  + title + "        " + dueDate + "        " + status;
     }
 
 }

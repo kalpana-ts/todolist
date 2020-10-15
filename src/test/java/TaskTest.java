@@ -33,7 +33,7 @@ public class TaskTest {
     @BeforeEach
     public void setUp() throws Exception{
         try{
-            task = new Task(validTitle, validProject, validDueDate, validStatus);
+            task = new Task(validTitle, validProject, validDueDate);
         }catch(Exception e){
             System.out.println("Following is the error on testing of Task class" );
             System.out.println(e.getMessage());
