@@ -46,9 +46,9 @@ public class Task implements Serializable {
 
     public void setDueDate(LocalDate dueDate) throws DateTimeException {
         //Throw DateTimeException if the date is past date
-        if(dueDate.compareTo(LocalDate.now())>0){
+        if(dueDate.compareTo(LocalDate.now())>0)
             throw new DateTimeException("The entered date is past already");
-        }
+
         //Save dueDate in the yyyy-MM-dd format
         DateTimeFormatter formattedDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.dueDate = LocalDate.parse(dueDate.format(formattedDate));
