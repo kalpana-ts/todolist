@@ -9,11 +9,7 @@ import java.time.format.DateTimeFormatter;
  * @version 1.0
  * @Date 07/10/2020
  */
-
-
-/* To be done
-    Check empty and null values in set methods
-    find what to do on else part
+/*check Length of the String
 
  */
 
@@ -45,7 +41,7 @@ public class Task implements Serializable {
 
     public void setDueDate(LocalDate dueDate) throws DateTimeException {
         //Throw DateTimeException if the date is past date
-        if(dueDate.compareTo(LocalDate.now())>0)
+        if(dueDate.compareTo(LocalDate.now())<0)
             throw new DateTimeException("The entered date is past already,not allowed!!");
 
         //Save dueDate in the yyyy-MM-dd format
@@ -78,4 +74,8 @@ public class Task implements Serializable {
         return project + "      "  + title + "        " + dueDate + "        " + status;
     }
 
+    public void markTaskCompleted() {
+        if (!this.getStatus())
+            this.setStatus(true);
+    }
 }

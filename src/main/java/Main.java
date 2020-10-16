@@ -1,4 +1,3 @@
-import java.text.ParseException;
 import java.util.Scanner;
 
 /** Main Class with main method of the project
@@ -10,56 +9,65 @@ import java.util.Scanner;
 
 public class Main {
     // A string to hold the data file name which contains all tasks and their details
-    public static String filename = "tasks.obj";
+    public static String fileName = "tasks.obj";
 
     /**
      * main method to run the command line based To Do List application
      * @param args array of String holding command line parameters
      */
     public static void main(String[] args) {
+        TaskList taskList = new TaskList();
+        int choice = -5;
 
-        int choice = 0;
         try {
-
-        //    Task task = new Task( );
             Scanner scanner = new Scanner(System.in);
-            TaskList taskList = new TaskList();
-            taskList.readTasksFromFile();
+            taskList.readTasksFromFile(fileName);
 
             Display.welcomeMsg();
 
-            while (choice != 5) {
-                    Display.mainMenuDisplay( );
+            while (choice != 4) {
+                    Display.mainMenu( );
 
-                    choice = scanner.nextInt();
+                    choice = readAndValidateChoice();
 
                     switch(choice){
                         case 1:
                             Display.listAllMenuDisplay();
-                            taskList.displayAllTasks(scanner.nextInt());
+                            taskList.displaySortedTasksList(readAndValidateChoice());
                             break;
                         case 2:
-                            taskList.readNewTasks();
+                            taskList.readNewTasksFromUser();
                             break;
                         case 3:
-                            System.out.println("-yet to Write edit method" );
+                            taskList.displayAllTasksWithIndex();
+                            Display.displayEditTaskSelection();
+                            taskList.editTask(scanner.nextLine());
                             break;
                         case 4:
-                            System.out.println("yet to write Remove method" );
+                            taskList.writeTaskObj(fileName);
                             break;
-                        case 5:
-                            taskList.writeTaskObj(filename);
-                            break;
-
-
                         default:
-                            System.out.println("End of the program" );
-
-
+                            Display.wrongChoice();
                     }
             }
         }catch(Exception e){
             System.out.println("Parse Exception");
         }
+    }
+    public static int readAndValidateChoice(){
+        Scanner sc = new Scanner(System.in);
+        int choice=50;
+        do {
+
+            if(choice<=0)
+             System.out.println("Please enter a number between 1 to 4!");
+
+            while (!sc.hasNextInt()) {
+                System.out.println("That's not a number!");
+                sc.next();
+            }
+            choice = sc.nextInt();
+        } while (choice <= 0);
+        return choice;
     }
 }
