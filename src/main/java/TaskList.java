@@ -1,5 +1,4 @@
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -52,11 +51,11 @@ public class TaskList {
      * @param choice
      */
     public void displaySortedTasksList(int choice) {
-        Display.separator('-', 75);
+        Display.printIterator('-', 75);
         System.out.println("Total Tasks = " + taskList.size( ) +
                 "\t\t" + Display.GREEN_TEXT + "Tasks Completed = " + completedTaskCount( ) + "\t\t" +
                 Display.RED_TEXT + " Tasks Not Completed = " + notCompletedCount( ) + Display.RESET_TEXT);
-        Display.separator('-', 75);
+        Display.printIterator('-', 75);
 
         if (taskList.size( ) == 0) {
             System.out.println(Display.RED_TEXT + "Task list is empty" + Display.RESET_TEXT);
@@ -65,27 +64,27 @@ public class TaskList {
 
         if (choice == 2) {
             String lineFormat = "%-20s %-35s %-13s %-10s";
-            System.out.println(String.format(lineFormat, "Project", "Title", "DueDate", "Completed"));
-            System.out.println(String.format(lineFormat, "-------", "------", "--------", "-------"));
+            System.out.printf((lineFormat) + "%n", "Project", "Title", "DueDate", "Completed");
+            System.out.printf((lineFormat) + "%n", "-------", "------", "--------", "-------");
 
             List<Task> sortedTaskList = taskList.stream( )
                     .sorted(Comparator.comparing(Task::getProject))
                     .collect((Collectors.toList( )));
 
             for (Task task : sortedTaskList)
-                System.out.println(String.format(lineFormat, task.getProject( ), task.getTitle( ), task.getDueDate( ), task.getStatus( ) ? "Yes" : "No"));
+                System.out.printf((lineFormat) + "%n", task.getProject( ), task.getTitle( ), task.getDueDate( ), task.getStatus( ) ? "Yes" : "No");
             System.out.println( );
         } else {
             String lineFormat = "%-13s %-35s %-20s %-10s";
-            System.out.println(String.format(lineFormat, "DueDate", "Title", "Project", "Completed"));
-            System.out.println(String.format(lineFormat, "-------", "-----", "-------", "---------"));
+            System.out.printf((lineFormat) + "%n", "DueDate", "Title", "Project", "Completed");
+            System.out.printf((lineFormat) + "%n", "-------", "-----", "-------", "---------");
 
             List<Task> sortedTaskList = taskList.stream( )
                     .sorted(Comparator.comparing(Task::getDueDate))
                     .collect((Collectors.toList( )));
 
             for (Task task : sortedTaskList)
-                System.out.println(String.format(lineFormat, task.getDueDate( ), task.getTitle( ), task.getProject( ), task.getStatus( ) ? "Yes" : "No"));
+                System.out.printf((lineFormat) + "%n", task.getDueDate( ), task.getTitle( ), task.getProject( ), task.getStatus( ) ? "Yes" : "No");
             System.out.println( );
         }
     }
@@ -96,36 +95,34 @@ public class TaskList {
             System.out.println(Display.RED_TEXT + "Task list is empty" + Display.RESET_TEXT);
             return;
         }
-        System.out.println(String.format(lineFormat, "Num", "Title", "Project", "DueDate", "Completed"));
-        System.out.println(String.format(lineFormat, "---", "-----", "-------", "-------", "---------"));
+        System.out.println("\n Task List : " );
+        System.out.printf((lineFormat) + "%n", "Num", "Title", "Project", "DueDate", "Completed");
+        System.out.printf((lineFormat) + "%n", "---", "-----", "-------", "-------", "---------");
 
         for (Task task : taskList)
-            System.out.println(String.format(lineFormat,taskList.indexOf(task)+1, task.getTitle( ), task.getProject( ), task.getDueDate( ), task.getStatus( ) ? "Yes" : "No"));
+            System.out.printf((lineFormat) + "%n",taskList.indexOf(task)+1, task.getTitle( ), task.getProject( ), task.getDueDate( ), task.getStatus( ) ? "Yes" : "No");
         System.out.println( );
     }
 
     //Read new tasks from user
-    public boolean readNewTasksFromUser(){
+    public void readNewTasksFromUser(){
         try {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("Please Enter Task Details");
             System.out.println("-------------------------");
-            System.out.println("Enter Title of the task:");
+            System.out.print("\nEnter Title of the task:");
             String title = scanner.nextLine( );
-            System.out.println("Enter due date(yyyy-MM-dd): ");
+            System.out.print("\nEnter due date(yyyy-MM-dd): ");
             LocalDate dueDate = LocalDate.parse(scanner.nextLine( ));
-            System.out.println("Enter the project name(Home/SDA/Kids/Others):");
+            System.out.print("\nEnter the project name(Home/SDA/Kids/Others):");
             String project = scanner.nextLine( );
 
             this.taskList.add(new Task(title, project, dueDate));
             System.out.println("Task added to the list successfully");
 
-            return true;
-
         } catch (Exception e) {
             System.out.println("Task not added!");
-            return false;
         }
     }
     /**
@@ -135,17 +132,18 @@ public class TaskList {
     public void editTask(String taskChoice) throws NullPointerException{
         try{
             // Checking the if the taskChoice given is not null or empty
-            if(taskChoice.trim().equals("") || taskChoice == null ){
+            if(taskChoice.trim().equals("")){
                 throw new NullPointerException("Empty Task Number: Returning to main menu");
             }
             int taskIndex = Integer.parseInt(taskChoice) -1;
-            if(taskIndex <= 0 || taskIndex > taskList.size()){
+            if(taskIndex < 0 || taskIndex > taskList.size()){
                 throw new ArrayIndexOutOfBoundsException("Task selected is not in the List:returning to main menu");
             }
 
             Task task = taskList.get(taskIndex);
 
-            System.out.println("Selected task is  :"+ task );
+            System.out.println("\nSelected task is  :"+ taskChoice + "\n" + task );
+
 
             Display.editTaskMenu();
             Scanner scanner = new Scanner(System.in);
@@ -160,10 +158,10 @@ public class TaskList {
                     break;
                 case "3":
                     taskList.remove(task);
-                    System.out.println(Display.GREEN_TEXT + "Task Number "+ taskChoice + " is removed from the List");
+                    System.out.println(Display.GREEN_TEXT + "\nTask Number "+ taskChoice + " is removed from the List"+Display.RESET_TEXT);
                     break;
                 default:
-                    System.out.println(Display.RED_TEXT + "Unexpected value: " + choice + Display.RESET_TEXT);
+                    System.out.println(Display.RED_TEXT + "Unexpected value " + choice + Display.RESET_TEXT);
             }
         }catch (Exception e) {
             System.out.println(Display.RED_TEXT + e.getMessage() + Display.RESET_TEXT);
@@ -177,18 +175,19 @@ public class TaskList {
 
             System.out.print("Task Title(Press enter if you do not want to change the title): " );
             String title = scanner.nextLine();
-            if(!(title.trim().equals("") || title == null))
+            if(!title.trim().equals(""))
                 task.setTitle(title);
 
             System.out.print("Project Name(Press enter if you do not want to change the project): " );
             String project = scanner.nextLine();
-            if(!(project.trim().equals("") || project == null))
+            if(!project.trim().equals(""))
                 task.setProject(project);
 
             System.out.print("Due Date[yyyy-MM-dd] (Press enter if you do not want to change the due date): " );
             String dueDate = scanner.nextLine();
-            if(!(dueDate.trim().equals("") || dueDate == null))
+            if(!dueDate.trim().equals(""))
                 task.setDueDate(LocalDate.parse(dueDate));
+
 
             System.out.println(Display.GREEN_TEXT+ "Task updated successfully " + Display.RESET_TEXT );
 
@@ -230,10 +229,10 @@ public class TaskList {
             file.close( );
 
             System.out.println("Tasks saved to the file");
-            return;
+
         } catch (IOException e) {
             System.out.println("File doesn't found" + e);
-            return;
+
         }
     }
 }

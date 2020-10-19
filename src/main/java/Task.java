@@ -71,7 +71,13 @@ public class Task implements Serializable {
 
     @Override
     public String toString(){
-        return project + "      "  + title + "        " + dueDate + "        " + status;
+        String s = "Title: " + title + "\n" +
+                "Due Date : " + dueDate + "\n" +
+                "Project: " + project + "\n" +
+                "Status: " ;
+        String status = getStatus( ) ? "Completed" : "Not Completed";
+        return s + status;
+
     }
 
     public void markTaskCompleted() {
