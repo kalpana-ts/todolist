@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 
 public class Main {
-    // A string to hold the data file name which contains all tasks and their details
+    // A string variable to hold the data file name.
     public static String fileName = "tasks.obj";
 
     /**
@@ -16,6 +16,7 @@ public class Main {
      * @param args array of String holding command line parameters
      */
     public static void main(String[] args) {
+        // An object to hold all
         TaskList taskList = new TaskList();
         int choice = -5;
 
