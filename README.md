@@ -9,23 +9,23 @@ User can choose what they want to do for eg. Add a new task, see all the tasks, 
  
 ## Basic Features of the Application
 
-####Task Model:
+#### Task Model:
     -Title
     -Project
     -Due Date
     -Status
-####Display all tasks, sorted by
+#### Display all tasks, sorted by
     -By Date
     -By Project
     
-####Following actions can be done
+#### Following actions can be done
     -Add tasks
     -Edit tasks
     -Mark tasks as done
     -Remove tasks
     
-#####Text based user Interface
-#####Read and write tasks from and into a data file
+##### Text based user Interface
+##### Read and write tasks from and into a data file
      
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
