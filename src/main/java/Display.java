@@ -1,4 +1,5 @@
 /** This class contains all the codes to display as menu
+ * all the methods in this class are static
  * @author Kalpana TS
  * @version 1.0
  * @Date 07/10/2020
@@ -12,7 +13,7 @@ public class Display {
 
 
     /**
-     *This method prints Welcome Message when a user starts the application
+     *This is a static method that prints Welcome Message when a user starts the application
      */
     public static void welcomeMsg(){
         System.out.println(GREEN_TEXT+ "Welcome to ToDo List App" );
@@ -21,39 +22,46 @@ public class Display {
 
 
     /**
-     *This is the main menu of the application with all the options
+     *This is the main menu of the application with all available  options
+     * @param notCompletedCount is number of tasks to do(yet to complete)
+     * @param completedTaskCount is number of tasks completed
      */
-    public static void mainMenu(){
+    public static void mainMenu(int notCompletedCount, int completedTaskCount){
         System.out.println("\n MAIN MENU");
-        System.out.println(" __________");
-        System.out.println(" \n Select an Option:");
+        System.out.println(" __________\n");
+        System.out.println(" You have " + Display.RED_TEXT
+                + notCompletedCount + " task(s) todo "
+                + Display.RESET_TEXT + " and " + Display.GREEN_TEXT
+                + completedTaskCount + " completed task(s)\n" + Display.RESET_TEXT);
+        System.out.println(" Select an Option:");
         System.out.println(" 1. View tasks List(View by Date/View by Project)");
         System.out.println(" 2. Add a new task");
         System.out.println(" 3. Edit a task(Mark as Done/Remove/update)");
-        System.out.println(" 4. Save and Quit");
+        System.out.println(" 4. Save and Quit\n");
 
         System.out.print(" Your Choice[1-4]: ");
 
     }
 
     /**
-     * To display the Menu for View tasks
+     * To display the Menu for View tasks on the console with 2 options
+     * sort by date and sort by project.
      */
     public static void listAllMenuDisplay(){
         System.out.println("\nView all Tasks");
-        System.out.println("______________");
+        System.out.println("______________\n");
         System.out.println("Select an option:");
-        System.out.println("1. View Tasks by Date");
+        System.out.println("1. View Tasks by Date(Default)");
         System.out.println("2. View Tasks by Project");
         System.out.print(" Your Choice[1-2]: ");
     }
 
     /**
-     * This is edit task menu
+     * This method displays edit options to  the user
      */
     public static void editTaskMenu(){
         System.out.println("\nEdit a Task");
-        System.out.println("-----------");
+        System.out.println("-----------\n");
         System.out.println("Select an option");
         System.out.println("1. Mark as Done");
         System.out.println("2. Edit a selected task" );
@@ -89,5 +97,15 @@ public class Display {
         System.out.println(RED_TEXT);
         System.out.println("Incorrect choice: Please enter a valid choice");
         System.out.print(RESET_TEXT);
+    }
+
+    /**
+     * This method will display the Good bye message at the end of the program
+     */
+    public static void  goodByeMessage() {
+        System.out.println(GREEN_TEXT);
+        System.out.println("All tasks are saved to the file");
+        System.out.println("Good Bye");
+        System.out.println(RESET_TEXT);
     }
 }
