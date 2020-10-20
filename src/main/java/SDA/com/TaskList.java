@@ -1,3 +1,5 @@
+package SDA.com;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,7 +11,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /**
- * This class contains the actual Task List as an arraylist
+ * This class contains the actual SDA.com.Task List as an arraylist
  *
  * @author Kalpana TS
  * @version 1.0
@@ -22,7 +24,7 @@ public class TaskList {
     private ArrayList<Task> taskList;
 
     /**
-     * creating an TaskList object
+     * creating an SDA.com.TaskList object
      */
     public TaskList() {
         taskList = new ArrayList<>( );
@@ -56,14 +58,14 @@ public class TaskList {
 
 
     /**
-     * Method which reads Task details from the user and adds
+     * Method which reads SDA.com.Task details from the user and adds
      * into the Tasks list.
      */
     public void readNewTasksFromUser(){
         try {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println("\n Please Enter Task Details");
+            System.out.println("\n Please Enter SDA.com.Task Details");
             System.out.println(" -------------------------");
             System.out.print("\n Enter Title of the task: ");
             String title = scanner.nextLine( );
@@ -73,15 +75,15 @@ public class TaskList {
             String project = scanner.nextLine();
 
             this.taskList.add(new Task(title, project, dueDate));
-            System.out.println(Display.GREEN_TEXT + "\n Task added to the list successfully" + Display.RESET_TEXT);
+            System.out.println(Display.GREEN_TEXT + "\n SDA.com.Task added to the list successfully" + Display.RESET_TEXT);
 
         } catch (Exception e) {
-            System.out.println(Display.RED_TEXT + " Task not added! Entered data is not valid \n" + e + Display.RESET_TEXT);
+            System.out.println(Display.RED_TEXT + " SDA.com.Task not added! Entered data is not valid \n" + e + Display.RESET_TEXT);
         }
     }
 
     /**
-     * Method to display all the Task from list in the sorted order
+     * Method to display all the SDA.com.Task from list in the sorted order
      * It either sorts the task by due date or by Project name
      * @param choice choice chosen by the user whether to sort the list by date or project
      */
@@ -100,7 +102,7 @@ public class TaskList {
                 System.out.printf((lineFormat) + "%n", "Project", "Title", "DueDate", "Completed");
                 System.out.printf((lineFormat) + "%n", "-------", "------", "--------", "-------");
             } else {
-                System.out.println(Display.RED_TEXT + "Task list is empty" + Display.RESET_TEXT);
+                System.out.println(Display.RED_TEXT + "SDA.com.Task list is empty" + Display.RESET_TEXT);
             }
 
             List<Task> sortedTaskList = taskList.stream( )
@@ -118,7 +120,7 @@ public class TaskList {
                 System.out.printf((lineFormat) + "%n", "DueDate", "Title", "Project", "Completed");
                 System.out.printf((lineFormat) + "%n", "-------", "-----", "-------", "---------");
             } else {
-                System.out.println(Display.RED_TEXT + "Task list is empty" + Display.RESET_TEXT);
+                System.out.println(Display.RED_TEXT + "SDA.com.Task list is empty" + Display.RESET_TEXT);
             }
 
             List<Task> sortedTaskList = taskList.stream( )
@@ -138,11 +140,11 @@ public class TaskList {
     public boolean displayAllTasksWithIndex(){
         String lineFormat = "%-5s %-35s %-20s %-13s %-10s";
         if (taskList.size( ) > 0) {
-            System.out.println("\n Task List : " );
+            System.out.println("\n SDA.com.Task List : " );
             System.out.printf((lineFormat) + "%n", "Num", "Title", "Project", "DueDate", "Completed");
             System.out.printf((lineFormat) + "%n", "---", "-----", "-------", "-------", "---------");
         } else {
-            System.out.println(Display.RED_TEXT + "\n Task list is empty" + Display.RESET_TEXT);
+            System.out.println(Display.RED_TEXT + "\n SDA.com.Task list is empty" + Display.RESET_TEXT);
             return false;
         }
         for (Task task : taskList)
@@ -161,11 +163,11 @@ public class TaskList {
         try{
             // Checking the if the taskChoice given is not null or empty
             if(taskChoice.trim().equals("")){
-                throw new NullPointerException("Empty Task Number: Returning to main menu");
+                throw new NullPointerException("Empty SDA.com.Task Number: Returning to main menu");
             }
             int taskIndex = Integer.parseInt(taskChoice) -1;
             if(taskIndex < 0 || taskIndex > taskList.size()){
-                throw new ArrayIndexOutOfBoundsException("Task selected is not in the List:returning to main menu");
+                throw new ArrayIndexOutOfBoundsException("SDA.com.Task selected is not in the List:returning to main menu");
             }
 
             Task task = taskList.get(taskIndex);
@@ -179,14 +181,14 @@ public class TaskList {
             switch(choice) {
                 case "1":
                     task.markTaskCompleted();
-                    System.out.println(Display.GREEN_TEXT+"Task Number " + taskChoice + " marked as done"+Display.RESET_TEXT );
+                    System.out.println(Display.GREEN_TEXT+"SDA.com.Task Number " + taskChoice + " marked as done"+Display.RESET_TEXT );
                     break;
                 case "2":
                     readTasksFromUserToUpdate(task);
                     break;
                 case "3":
                     taskList.remove(task);
-                    System.out.println(Display.GREEN_TEXT + "\nTask Number "+ taskChoice + " is removed from the List"+Display.RESET_TEXT);
+                    System.out.println(Display.GREEN_TEXT + "\nSDA.com.Task Number "+ taskChoice + " is removed from the List"+Display.RESET_TEXT);
                     break;
                 default:
                     System.out.println(Display.RED_TEXT + "Unexpected choice : Returning to main menu " + choice + Display.RESET_TEXT);
@@ -203,9 +205,9 @@ public class TaskList {
     private void readTasksFromUserToUpdate(Task task) {
         Scanner scanner = new Scanner(System.in);
         try{
-            System.out.println("Enter Task Details to Update:");
+            System.out.println("Enter SDA.com.Task Details to Update:");
 
-            System.out.print("Task Title(Press enter if you do not want to change the title): " );
+            System.out.print("SDA.com.Task Title(Press enter if you do not want to change the title): " );
             String title = scanner.nextLine();
             if(!title.trim().equals(""))
                 task.setTitle(title);
@@ -223,10 +225,10 @@ public class TaskList {
             }
 
 
-            System.out.println(Display.GREEN_TEXT+ "Task updated successfully " + Display.RESET_TEXT );
+            System.out.println(Display.GREEN_TEXT+ "SDA.com.Task updated successfully " + Display.RESET_TEXT );
 
         }catch(Exception e){
-            System.out.println(Display.RED_TEXT+ "Task not Updated:"+ e.getMessage() + Display.RESET_TEXT );
+            System.out.println(Display.RED_TEXT+ "SDA.com.Task not Updated:"+ e.getMessage() + Display.RESET_TEXT );
         }
     }
 

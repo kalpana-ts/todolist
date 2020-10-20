@@ -1,3 +1,5 @@
+package SDA.com;
+
 import java.io.Serializable;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -21,7 +23,7 @@ public class Task implements Serializable {
     private String project;
 
     /**
-     * Creating an object of the Task Class
+     * Creating an object of the SDA.com.Task Class
      * @param title A String that holds the title of a task and it cannot be empty or null.
      * @param project A String that holds the name of project, it can be an empty string.
      * @param dueDate A Date field which holds due date of the task as yyyy-mm-dd format

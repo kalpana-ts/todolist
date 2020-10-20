@@ -1,6 +1,8 @@
+package SDA.com;
+
 import java.util.Scanner;
 
-/** Main Class with main method of the project
+/** SDA.com.Main Class with main method of the project
  * @author Kalpana TS
  * @version 1.0
  * @Date 07/10/2020
