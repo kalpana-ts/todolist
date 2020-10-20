@@ -1,4 +1,7 @@
+package SDA.com;
 
+import SDA.com.Task;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
@@ -8,9 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
- * Test class for Task model class
+ * Test class for SDA.com.Task model class
  *
- * Implemented unit testing for all the methods of Task class
+ * Implemented unit testing for all the methods of SDA.com.Task class
  * @author Kalpana
  * @version 1.0
  * @since 2020-10-15
@@ -35,7 +38,7 @@ public class TaskTest {
         try{
             task = new Task(validTitle, validProject, validDueDate);
         }catch(Exception e){
-            System.out.println("Following is the error on testing of Task class" );
+            System.out.println("Following is the error on testing of SDA.com.Task class" );
             System.out.println(e.getMessage());
         }
     }
