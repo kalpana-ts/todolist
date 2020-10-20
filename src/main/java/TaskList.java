@@ -1,4 +1,6 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -16,25 +18,30 @@ import java.util.stream.Collectors;
 
 
 public class TaskList {
-
+    // An array list of task objects
     private ArrayList<Task> taskList;
 
-
+    /**
+     * creating an TaskList object
+     */
     public TaskList() {
         taskList = new ArrayList<>( );
     }
 
     /**
-     *
+     *This method is to read the Tasks from the data file
+     * @param fileName a String which holds the name of the file
      */
 
     public void readTasksFromFile(String fileName) {
-        //    ArrayList<Task> list = new ArrayList<>();
         try {
+            if (!Files.isReadable(Paths.get(fileName))) {
+                System.out.println(Display.RED_TEXT + " The data file does not exist, Creating a new data file " + Display.RESET_TEXT);
+            }
             FileInputStream file = new FileInputStream(fileName);
             ObjectInputStream stream = new ObjectInputStream(file);
 
-            // read thing from the stream
+            // read tasks from the stream
             taskList = (ArrayList<Task>) stream.readObject( );
 
             stream.close( );
@@ -47,25 +54,54 @@ public class TaskList {
 
     }
 
+
     /**
-     * @param choice
+     * Method which reads Task details from the user and adds
+     * into the Tasks list.
      */
-    public void displaySortedTasksList(int choice) {
+    public void readNewTasksFromUser(){
+        try {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("\n Please Enter Task Details");
+            System.out.println(" -------------------------");
+            System.out.print("\n Enter Title of the task: ");
+            String title = scanner.nextLine( );
+            System.out.print("\n Enter due date(yyyy-MM-dd): ");
+            LocalDate dueDate = LocalDate.parse(scanner.nextLine( ));
+            System.out.print("\n Enter the project name(Home/SDA/Kids/Others): ");
+            String project = scanner.nextLine();
+
+            this.taskList.add(new Task(title, project, dueDate));
+            System.out.println(Display.GREEN_TEXT + "\n Task added to the list successfully" + Display.RESET_TEXT);
+
+        } catch (Exception e) {
+            System.out.println(Display.RED_TEXT + " Task not added! Entered data is not valid \n" + e + Display.RESET_TEXT);
+        }
+    }
+
+    /**
+     * Method to display all the Task from list in the sorted order
+     * It either sorts the task by due date or by Project name
+     * @param choice choice chosen by the user whether to sort the list by date or project
+     */
+    public void displaySortedTasksList(String choice) {
         Display.printIterator('-', 75);
         System.out.println("Total Tasks = " + taskList.size( ) +
                 "\t\t" + Display.GREEN_TEXT + "Tasks Completed = " + completedTaskCount( ) + "\t\t" +
                 Display.RED_TEXT + " Tasks Not Completed = " + notCompletedCount( ) + Display.RESET_TEXT);
         Display.printIterator('-', 75);
 
-        if (taskList.size( ) == 0) {
-            System.out.println(Display.RED_TEXT + "Task list is empty" + Display.RESET_TEXT);
-            return;
-        }
-
-        if (choice == 2) {
+        if (choice.equals("2")) {
             String lineFormat = "%-20s %-35s %-13s %-10s";
-            System.out.printf((lineFormat) + "%n", "Project", "Title", "DueDate", "Completed");
-            System.out.printf((lineFormat) + "%n", "-------", "------", "--------", "-------");
+
+            if (taskList.size( ) > 0) {
+                System.out.println( );
+                System.out.printf((lineFormat) + "%n", "Project", "Title", "DueDate", "Completed");
+                System.out.printf((lineFormat) + "%n", "-------", "------", "--------", "-------");
+            } else {
+                System.out.println(Display.RED_TEXT + "Task list is empty" + Display.RESET_TEXT);
+            }
 
             List<Task> sortedTaskList = taskList.stream( )
                     .sorted(Comparator.comparing(Task::getProject))
@@ -76,8 +112,14 @@ public class TaskList {
             System.out.println( );
         } else {
             String lineFormat = "%-13s %-35s %-20s %-10s";
-            System.out.printf((lineFormat) + "%n", "DueDate", "Title", "Project", "Completed");
-            System.out.printf((lineFormat) + "%n", "-------", "-----", "-------", "---------");
+
+            if (taskList.size() > 0) {
+                System.out.println( );
+                System.out.printf((lineFormat) + "%n", "DueDate", "Title", "Project", "Completed");
+                System.out.printf((lineFormat) + "%n", "-------", "-----", "-------", "---------");
+            } else {
+                System.out.println(Display.RED_TEXT + "Task list is empty" + Display.RESET_TEXT);
+            }
 
             List<Task> sortedTaskList = taskList.stream( )
                     .sorted(Comparator.comparing(Task::getDueDate))
@@ -89,45 +131,31 @@ public class TaskList {
         }
     }
 
-    public void displayAllTasksWithIndex(){
+    /**
+     * Displays all the tasks with index
+     * @return a boolean true if list has tasks ; false if list is empty
+     */
+    public boolean displayAllTasksWithIndex(){
         String lineFormat = "%-5s %-35s %-20s %-13s %-10s";
-        if (taskList.size( ) == 0) {
-            System.out.println(Display.RED_TEXT + "Task list is empty" + Display.RESET_TEXT);
-            return;
+        if (taskList.size( ) > 0) {
+            System.out.println("\n Task List : " );
+            System.out.printf((lineFormat) + "%n", "Num", "Title", "Project", "DueDate", "Completed");
+            System.out.printf((lineFormat) + "%n", "---", "-----", "-------", "-------", "---------");
+        } else {
+            System.out.println(Display.RED_TEXT + "\n Task list is empty" + Display.RESET_TEXT);
+            return false;
         }
-        System.out.println("\n Task List : " );
-        System.out.printf((lineFormat) + "%n", "Num", "Title", "Project", "DueDate", "Completed");
-        System.out.printf((lineFormat) + "%n", "---", "-----", "-------", "-------", "---------");
-
         for (Task task : taskList)
             System.out.printf((lineFormat) + "%n",taskList.indexOf(task)+1, task.getTitle( ), task.getProject( ), task.getDueDate( ), task.getStatus( ) ? "Yes" : "No");
         System.out.println( );
+        return true;
     }
 
-    //Read new tasks from user
-    public void readNewTasksFromUser(){
-        try {
-            Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Please Enter Task Details");
-            System.out.println("-------------------------");
-            System.out.print("\nEnter Title of the task:");
-            String title = scanner.nextLine( );
-            System.out.print("\nEnter due date(yyyy-MM-dd): ");
-            LocalDate dueDate = LocalDate.parse(scanner.nextLine( ));
-            System.out.print("\nEnter the project name(Home/SDA/Kids/Others):");
-            String project = scanner.nextLine( );
-
-            this.taskList.add(new Task(title, project, dueDate));
-            System.out.println("Task added to the list successfully");
-
-        } catch (Exception e) {
-            System.out.println("Task not added!");
-        }
-    }
     /**
-     * @param taskChoice
-     * @throws NullPointerException
+     * shows edit task menu and get the choice from the user to dot he appropriate action
+     * @param taskChoice task number selected by the user to update(edit)
+     * @throws NullPointerException when user doesn't enter any task number
      */
     public void editTask(String taskChoice) throws NullPointerException{
         try{
@@ -161,13 +189,17 @@ public class TaskList {
                     System.out.println(Display.GREEN_TEXT + "\nTask Number "+ taskChoice + " is removed from the List"+Display.RESET_TEXT);
                     break;
                 default:
-                    System.out.println(Display.RED_TEXT + "Unexpected value " + choice + Display.RESET_TEXT);
+                    System.out.println(Display.RED_TEXT + "Unexpected choice : Returning to main menu " + choice + Display.RESET_TEXT);
             }
         }catch (Exception e) {
             System.out.println(Display.RED_TEXT + e.getMessage() + Display.RESET_TEXT);
         }
     }
 
+    /**
+     * Reads the tasks details from user to edit the task
+     * @param task chosen by user to edit
+     */
     private void readTasksFromUserToUpdate(Task task) {
         Scanner scanner = new Scanner(System.in);
         try{
@@ -185,20 +217,23 @@ public class TaskList {
 
             System.out.print("Due Date[yyyy-MM-dd] (Press enter if you do not want to change the due date): " );
             String dueDate = scanner.nextLine();
-            if(!dueDate.trim().equals(""))
+            if(!dueDate.trim().equals("")) {
                 task.setDueDate(LocalDate.parse(dueDate));
+                task.markTaskInComplete();
+            }
 
 
             System.out.println(Display.GREEN_TEXT+ "Task updated successfully " + Display.RESET_TEXT );
 
         }catch(Exception e){
-            System.out.println(Display.RED_TEXT+ "Task not Update :"+ e.getMessage() + Display.RESET_TEXT );
+            System.out.println(Display.RED_TEXT+ "Task not Updated:"+ e.getMessage() + Display.RESET_TEXT );
         }
     }
 
 
     /**
-     * @return
+     * to count number of completed tasks
+     * @return number completed
      */
     public int completedTaskCount(){
         int count = 0;
@@ -209,6 +244,10 @@ public class TaskList {
         return count;
     }
 
+    /**
+     * to count number of incomplete tasks
+     * @return number not completed
+     */
     public int notCompletedCount() {
         int count = 0;
         for (Task task : taskList) {
@@ -219,6 +258,10 @@ public class TaskList {
     }
 
 
+    /**
+     * This method is to write all tasks added by the user into the data file
+     * @param filename in which data is to be written
+     */
     public void writeTaskObj(String filename) {
         try {
             FileOutputStream file = new FileOutputStream(filename);
