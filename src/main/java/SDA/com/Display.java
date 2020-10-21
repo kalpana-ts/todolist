@@ -18,7 +18,7 @@ public class Display {
      *This is a static method that prints Welcome Message when a user starts the application
      */
     public static void welcomeMsg(){
-        System.out.println(GREEN_TEXT+ "Welcome to ToDo List App" );
+        System.out.println(GREEN_TEXT+ "\n Welcome to ToDo List App" );
         System.out.println("------------------------" + RESET_TEXT);
     }
 
@@ -62,13 +62,12 @@ public class Display {
      * This method displays edit options to  the user
      */
     public static void editTaskMenu(){
-        System.out.println("\nEdit a SDA.com.Task");
+        System.out.println("\nEdit a task");
         System.out.println("-----------\n");
-        System.out.println("Select an option");
         System.out.println("1. Mark as Done");
         System.out.println("2. Edit a selected task" );
         System.out.println("3. Remove a task" );
-        System.out.println("4. Exit (Go back to SDA.com.Main menu)" );
+        System.out.println("4. Exit (Go back to Main menu)" );
         System.out.print("Enter your choice[1-4]: ");
     }
 
