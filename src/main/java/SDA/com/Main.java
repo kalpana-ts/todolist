@@ -1,5 +1,7 @@
 package SDA.com;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /** SDA.com.Main Class with main method of the project
@@ -18,16 +20,21 @@ public class Main {
      * @param args array of String holding command line parameters
      */
     public static void main(String[] args) {
-        // An object to hold all tasks and its details
-        TaskList taskList = new TaskList();
-        //To store choice chosen by the user
         int choice = -5;
-
         try {
-            Scanner scanner = new Scanner(System.in);
+            ArrayList<Task> taskArrayList = new ArrayList<Task>();
+            IOFile ioFile = new IOFile(taskArrayList);
             //Reading old tasks data from the data file. If it is the first time
             //of running the application , a message will be displayed.
-            taskList.readTasksFromFile(fileName);
+            taskArrayList = ioFile.readTasksFromFile(fileName);
+            ReadFromUser readFromUser = new ReadFromUser(taskArrayList);
+
+            // An object to hold all tasks and its details
+            TaskList taskList = new TaskList(taskArrayList);
+            //To store choice chosen by the user
+            Scanner scanner = new Scanner(System.in);
+
+
 
             //To display the welcome message
             Display.welcomeMsg();
@@ -41,13 +48,16 @@ public class Main {
 
                     switch(choice){
                         case 1:
+                            // View task list option
                             Display.listAllMenuDisplay();
                             taskList.displaySortedTasksList(scanner.nextLine());
                             break;
                         case 2:
-                            taskList.readNewTasksFromUser();
+                            //Add a task option
+                            readFromUser.readNewTasksFromUser();
                             break;
                         case 3:
+                            //Edit or update a task
                             listHasTasks = taskList.displayAllTasksWithIndex();
                             if(listHasTasks) {
                                 Display.displayEditTaskSelection( );
@@ -55,7 +65,8 @@ public class Main {
                             }
                             break;
                         case 4:
-                            taskList.writeTaskObj(fileName);
+                            //save and quit
+                            ioFile.writeTaskObj(fileName, taskArrayList);
                             Display.goodByeMessage();
                             break;
                         default:
@@ -65,9 +76,8 @@ public class Main {
 
         }catch(Exception e){
             System.out.println("Exception Caught: " + e);
-            System.out.println("Writing unsaved data in to the file" );
-            taskList.writeTaskObj(fileName);
-            System.out.println("The application quits with error");
+
+            System.out.println("The application quits with error, some data may lost");
         }
     }
 
