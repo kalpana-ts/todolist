@@ -9,12 +9,12 @@ User can choose what they want to do for eg. Add a new task, see all the tasks, 
  
 ## Basic Features of the Application
 
-#### SDA.com.Task Model:
+#### Task Model:
     -Title
     -Project
     -Due Date
     -Status
-#### SDA.com.Display all tasks, sorted by
+#### Display all tasks, sorted by
     -By Date
     -By Project
     

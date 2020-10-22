@@ -48,6 +48,7 @@ public class TaskTest {
      */
     @Test
     public void testValidTitle() {
+        task = new Task(validTitle, validProject, validDueDate);
         assertEquals(validTitle,task.getTitle());
     }
 
